@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load rec_extras %}
+
+<br/>
+<div class="row">
+    <div class="col-12">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    {{ form.entity|add_class:"custom-select" }}
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="text" name="period" id="id_period" class="form-control" placeholder="mm/yyyyy" maxlength="7" minlength="7" required> 
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="submit" value="Run Balance Sheet" class="btn btn-primary btn-block">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <br>
+        {% if entities %}
+            <center><h5>Balance Sheet</h5></center>
+            <center><h6>Entity : {{entities.entity}}</h6></center>  
+        {% endif %}
+
+        {% if periods %}
+            <center><h6>Period : {{periods.period}}</h6> </center>
+        {% endif %}
+        <br>
+        {% if gldetails %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">GL Number</th>
+                        <th scope="col">GL Description</th>
+                        <th class="text-right" scope="col">GL Amount</th>
+                        <th class="text-right" scope="col">Support Amount</th>
+                        <th class="text-right" scope="col">Variance</th>
+                        <th class="text-right" scope="col">Status</th>
+                        <th class="text-right" scope="col">Last Modified By</th>
+                        <th class="text-right" scope="col">Last Updated On</th>
+                        <th class="text-right" scope="col">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for gldetail in gldetails %}
+                        <tr>
+                            <td>{{gldetail.glnum}}</td>
+                            <td>{{gldetail.gldesc}}</td>
+                            <td class="text-right">{{gldetail.glamt|floatformat:2}}</td>
+                            <td class="text-right">{{gldetail.total_sales|floatformat:2}}</td>
+                            <td class="text-right">{{gldetail.glamt|subtract:gldetail.total_sales|floatformat:2}}</td>
+                            <td class="text-right">{{gldetail.status}}</td>
+                            <td class="text-right">{{gldetail.username}}</td>
+                            <td class="text-right">{{gldetail.updated_at|date:'m/d/y h:i A'}}</td>
+                            <td class="text-right"><a target="_blank" href="gldetail/{{gldetail.id}}">View/Update</a><br/></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

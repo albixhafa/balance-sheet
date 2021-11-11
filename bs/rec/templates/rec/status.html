@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load rec_extras %}
+
+<br/>
+<div class="row">
+    <div class="col-12">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-row justify-content-start">
+                <div class="form-group col-md-8">
+                    <input type="text" name="period" id="id_period" class="form-control" placeholder="mm/yyyyy" maxlength="7" minlength="7" required> 
+                </div>
+                <div class="form-group col-md-4">
+                    <input type="submit" value="Run Reconciliation Status" class="btn btn-primary btn-block">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <br>
+        {% if periods %}
+            <center><h5>Balance Sheet Reconciliation Status</h5> </center>
+            <center><h6>Period : {{periods.period}}</h6> </center>
+        {% endif %}
+        <br>
+        {% if status %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">Entity</th>
+                        <th style="text-align: center;" scope="col">Accounts - Pending</th>
+                        <th style="text-align: center;" scope="col">Accounts - In Progress</th>
+                        <th style="text-align: center;" scope="col">Accounts - Completed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for stat in status %}
+                        <tr>
+                            <td>{{stat.entity__entity}}</td>
+                            <td style="text-align: center;">{{stat.count_pending}}</td>
+                            <td style="text-align: center;">{{stat.count_inprogress}}</td>
+                            <td style="text-align: center;">{{stat.count_completed}}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

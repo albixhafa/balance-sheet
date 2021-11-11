@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}{% endblock %}
+
+{% block content %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+{% load rec_extras %}
+
+<br>
+<br>
+<div class="row">
+    <div class="col-12">
+        <h5 class="text-left">User : {{user}}</h5>
+    </div>
+</div>
+<hr>
+<div class="form-row">
+    {% if messages %}
+        {% for messages in message %}
+            <div class="alert alert-{{message.tags}}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    <div class="form-group col-md-4">
+        <form method="POST" action="">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" type="submit">
+                    Change Password
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+<hr>
+{% endblock %}

@@ -1,0 +1,61 @@
+{% load crispy_forms_tags %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400&display=swap');
+        td[data-monetary-amount] {
+          text-align: right;
+        }
+    
+        /* make the cells output their value */
+        td[data-monetary-amount]:after {
+          content: attr(data-monetary-amount);
+        }
+    
+        /* make debit amounts show up in red */
+        td[data-monetary-amount^="-"]:after {
+          color: red;
+        }
+        body {
+          font-family: 'Lato', sans-serif;
+          font-size: 0.8em;
+        }
+        .asteriskField {
+            display: none;
+        }
+    </style> 
+</head>
+<body>
+    <div class="content-section">
+        {% if messages %}
+            {% for messages in message %}
+                <div class="alert alert-{{message.tags}}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <form method="POST" action="">
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-button mb-4">Register</legend>
+                {{ form|crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info" type="submit">
+                    Sign Up
+                </button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Already Have An Account? <a class ="ml-2" href="{% url 'login' %}">Sign In</a>
+            </small>
+        </div>
+    </div>
+</body>
+</html>

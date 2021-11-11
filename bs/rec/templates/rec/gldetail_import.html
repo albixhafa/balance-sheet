@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+{% block title %}{% endblock %}
+{% block content %}
+
+<br>
+<br>
+<div class="row justify-content-start">
+  <div class="col-12">
+    <h5>Import Balance Sheet</h5>
+  </div>
+</div>
+  
+<hr>
+<div class="row justify-content-start">
+  <div class="col-md-4">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <input class="form-control-file" type="file" name="myfile" required>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-success" value="Save">Upload</button>
+      </div>
+    </form>
+  </div>
+</div>
+<div class="row">
+  {% for message in messages %}
+  <div class="col-md-4">
+    <p role="alert"{% if message.tags %} class="{{ message.tags }} alert alert-primary"{% endif %}>{{ message }}</p>
+  </div>
+  {% endfor %}
+</div>
+<hr>
+{% endblock %}
