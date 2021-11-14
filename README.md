@@ -8,7 +8,7 @@
 
 **INSTALLATION GUIDE<br>**
 
-Download recipry project and run the following commands inside "balance-sheet-integrity-recipry-main" directory :<br>
+Download recipry project and run the following commands inside "balance-sheet-main" directory :<br>
 
 **1. Install Dependecies<br>**
 ```
