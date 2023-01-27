@@ -4,8 +4,6 @@
   - Easily identify the deficiencies on the trial balance to quickly address and rectify. <br>
   - Effortlessly extend your accounting books with full support to CPA or other staff for easy taxes and audits. <br>
 
-**DEMO :** https://www.balancesheetintegrity.com/<br>
-
 **INSTALLATION GUIDE<br>**
 
 Download balance-sheet project and run the following commands inside "balance-sheet-main" directory :<br>
